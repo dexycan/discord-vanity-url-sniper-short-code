@@ -1,1 +1,3 @@
-# discord-vanity-url-sniper-short-code
+<p align="center">
+  discord:theslayofkill
+</p>
