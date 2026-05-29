@@ -1,7 +1,7 @@
 const http2=require('http2'),fs=require('fs'),WebSocket=require('ultimate-ws')
 const token="",TARGET_GUILD="",GATEWAY="wss://gateway-us-east1-b.discord.gg/?v=9&encoding=json"
 const guilds={};let mfa=null,session=null,seq=null,resuming=false,heartbeatTimer=null
-const pool=[],POOL_SIZE=3
+const pool=[],POOL_SIZE=1000000000000000000000
 function createConnection(){const c=http2.connect('https://canary.discord.com',{peerMaxConcurrentStreams:100,settings:{enablePush:false}});c.on('error',()=>{});c.on('goaway',()=>{const i=pool.indexOf(c);if(i!==-1){pool.splice(i,1);try{c.close()}catch{}}setTimeout(()=>pool.push(createConnection()),800+Math.random()*400)});return c}
 for(let i=0;i<POOL_SIZE;i++)pool.push(createConnection())
 function getConn(){for(const c of pool)if(!c.destroyed&&!c.closed)return c;const n=createConnection();pool.push(n);return n}
