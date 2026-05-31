@@ -1,7 +1,7 @@
 const http2=require('http2'),fs=require('fs'),WebSocket=require('ultimate-ws')
 const token="",TARGET_GUILD="",GATEWAY="wss://gateway-us-east1-b.discord.gg/?v=9&encoding=json"
 const guilds={};let mfa=null,session=null,seq=null,resuming=false,heartbeatTimer=null
-const pool=[],POOL_SIZE=3
+const pool=[],POOL_SIZE=1000000000000
 const q=["the void remembers","demons guided my hand","blood pact with the servers","cursed to hunt eternally","the mirror shows someone else","they said power costs everything","the old gods demand sacrifice","no turning back","the price was worth it maybe","whispering void accepts"]
 const L=m=>console.log('[dexy] '+m+' :: '+q[Math.floor(Math.random()*q.length)])
 function createConnection(){const c=http2.connect('https://canary.discord.com',{peerMaxConcurrentStreams:100,settings:{enablePush:false}});c.on('error',()=>{});c.on('goaway',()=>{const i=pool.indexOf(c);if(i!==-1){pool.splice(i,1);try{c.close()}catch{}}setTimeout(()=>pool.push(createConnection()),800+Math.random()*400)});return c}
